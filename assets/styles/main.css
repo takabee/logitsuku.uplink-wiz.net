@@ -225,3 +225,30 @@ h3 {
     color: #888;
     margin-top: 10px;
 }
+
+input[type="range"] {
+    accent-color: #004a7c;
+    /* スライダーのつまみの色を紺色に */
+}
+
+/* スマホ向けの調整 */
+@media (max-width: 600px) {
+    header .service-name {
+        font-size: 2em;
+        /* スマホでは少し小さく */
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .diagnostic-container {
+        padding: 15px;
+        /* 診断部分の余白を削る */
+    }
+
+    #risk-amount {
+        font-size: 1.8rem;
+        /* リスク金額がはみ出さないように */
+    }
+}
