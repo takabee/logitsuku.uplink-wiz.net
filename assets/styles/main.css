@@ -1,0 +1,227 @@
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    line-height: 1.7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color: #004a7c;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+header .service-name {
+    font-size: 3em;
+    color: #ffcc00;
+    font-weight: 900;
+    display: block;
+    margin: 10px 0;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+section {
+    padding: 30px 0;
+    border-bottom: 1px solid #eee;
+}
+
+h2 {
+    font-size: 2em;
+    color: #004a7c;
+    border-left: 5px solid #ffcc00;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #d64a00;
+    margin-top: 25px;
+}
+
+.cta-button {
+    display: block;
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #ff3333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #cc0000;
+}
+
+.plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.plan-table th,
+.plan-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.plan-table th {
+    background-color: #f2f2f2;
+    color: #004a7c;
+    width: 25%;
+}
+
+.highlight {
+    background-color: #fffacd;
+    padding: 3px 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.cost-table td {
+    font-weight: bold;
+}
+
+.comparison-table th {
+    background-color: #e6f3ff;
+    text-align: center;
+}
+
+.comparison-table td {
+    text-align: center;
+}
+
+.comparison-table .feature {
+    text-align: left;
+    font-weight: bold;
+}
+
+.comparison-table .negative {
+    color: #cc0000;
+    font-weight: bold;
+}
+
+.comparison-table .positive {
+    color: #008000;
+    font-weight: bold;
+}
+
+</style><style>.diagnostic-container {
+    background: #fff;
+    border: 2px solid #004a7c;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.slider-group {
+    margin: 25px 0;
+}
+
+.slider-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.slider-group input {
+    width: 100%;
+    cursor: pointer;
+}
+
+.risk-display {
+    background: #fff5f5;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#risk-amount {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #cc0000;
+}
+
+.btn-primary {
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #cc0000;
+}
+
+.skip-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.skip-link a {
+    color: #666;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 10px;
+}
