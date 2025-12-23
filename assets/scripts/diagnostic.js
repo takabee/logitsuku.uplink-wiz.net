@@ -1,72 +1,41 @@
-// 全体を関数で囲むことで、他のJSとの衝突を防ぎます
-(function () {
-    let diagnosticData = { clients: 0, hours: 0, risk: 0, skipped: false };
+export async function onRequestPost(context) {
+    const { request, env } = context;
+    const KV = env.DOWNLOAD_LEADS;
 
-    // DOMの読み込み完了を待ってから実行する
-    document.addEventListener('DOMContentLoaded', () => {
-        const clientInput = document.getElementById('input-clients');
-        const hourInput = document.getElementById('input-hours');
-        const downloadForm = document.getElementById('download-form');
+    try {
+        const data = await request.json();
 
-        // 要素が存在しない場合のエラー防止
-        if (!clientInput || !hourInput || !downloadForm) return;
+        const now = new Date();
+        const timestamp = now.toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
 
-        function updateRisk() {
-            const clients = parseInt(clientInput.value);
-            const hours = parseInt(hourInput.value);
-            // 計算式: 顧問先数 × 時間 × 1万円(時給) × 12ヶ月
-            const risk = clients * hours * 10000 * 12;
-
-            document.getElementById('val-clients').textContent = clients;
-            document.getElementById('val-hours').textContent = hours;
-            document.getElementById('risk-amount').textContent = "¥" + risk.toLocaleString();
-
-            diagnosticData = { clients, hours, risk, skipped: false };
-        }
-
-        clientInput.addEventListener('input', updateRisk);
-        hourInput.addEventListener('input', updateRisk);
-
-        // フォーム送信
-        downloadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const payload = {
-                ...diagnosticData,
-                office: formData.get('office'),
-                name: formData.get('name'),
-                email: formData.get('email')
-            };
-
-            try {
-                const response = await fetch('/api/download', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                if (result.downloadUrl) {
-                    alert('情報の送信に成功しました。ツールのダウンロードを開始します。');
-                    window.location.href = result.downloadUrl;
-                }
-            } catch (err) {
-                alert('エラーが発生しました。時間を置いて再度お試しください。');
+        // JSの変数名（clients, hours, risk, skipped, office, name, email）に完全準拠
+        const payload = {
+            createdAt: timestamp,
+            officeName: data.office || "未入力",
+            userName: data.name || "未入力",
+            email: data.email || "未入力",
+            // 診断データ
+            diagnosis: {
+                clients: data.clients || 0,
+                hours: data.hours || 0,
+                riskAmount: data.risk || 0,
+                isSkipped: data.skipped || false
             }
+        };
+
+        // 保存（一意のキーを作成）
+        const key = `${now.getTime()}_${payload.email}`;
+        await KV.put(key, JSON.stringify(payload));
+
+        // フロントエンドのJSが result.downloadUrl を期待しているので、本番のPDFパスを返す
+        return new Response(JSON.stringify({
+            success: true,
+            downloadUrl: "https://your-domain.com/path-to-your-tool.pdf" // ここを実際のPDFパスへ
+        }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" }
         });
-
-        // 初期表示の計算
-        updateRisk();
-    });
-
-    // showFormはHTMLから直接呼ばれるので、windowオブジェクトに紐付けて外から見えるようにする
-    window.showForm = function (skip = false) {
-        if (skip) diagnosticData.skipped = true;
-        const diagStep = document.getElementById('step-diagnostic');
-        const formStep = document.getElementById('step-form');
-        if (diagStep && formStep) {
-            diagStep.style.display = 'none';
-            formStep.style.display = 'block';
-        }
-    };
-})();
+    } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    }
+}
