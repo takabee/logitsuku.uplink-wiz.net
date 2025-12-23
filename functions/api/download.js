@@ -18,7 +18,7 @@ export async function onRequestPost(context) {
         // 3. 成功レスポンス
         return new Response(JSON.stringify({
             message: "Success",
-            downloadUrl: "https://google.com" // 一旦テスト用にGoogleにしています
+            downloadUrl: "https://logitsuku-ai.uplink-wiz.net/assets/tools/check-list.zip"
         }), {
             headers: { "Content-Type": "application/json" }
         });
