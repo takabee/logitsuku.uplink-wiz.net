@@ -3,47 +3,41 @@ export async function onRequestGet(context) {
     const KV = env.DOWNLOAD_LEADS;
 
     try {
-        // 1. KVからリストを取得
         const list = await KV.list();
         const keys = list.keys;
 
-        if (!keys || keys.length === 0) {
-            return new Response("No data found", { status: 404 });
-        }
+        // ヘッダー：管理しやすいよう項目を細分化
+        let csvRows = [["登録日時", "事務所名", "氏名", "メールアドレス", "顧問先数", "月間更新時間", "年間リスク額"]];
 
-        // 2. CSVヘッダー
-        let rows = [["Date", "Email", "Result"]];
-
-        // 3. データの取得
         for (const key of keys) {
-            try {
-                const value = await KV.get(key.name, { type: "json" });
+            const value = await KV.get(key.name, { type: "json" });
 
-                if (value) {
-                    // データの安全な取り出し
-                    const email = value.email || "N/A";
-                    const result = value.result ? JSON.stringify(value.result).replace(/"/g, '""') : "N/A";
-
-                    rows.push([key.name, `"${email}"`, `"${result}"`]);
-                }
-            } catch (e) {
-                // 個別のデータ取得エラーはスキップして継続
-                continue;
+            if (value) {
+                const row = [
+                    value.createdAt || "不明",
+                    value.officeName || "",
+                    value.userName || "",
+                    value.email || "",
+                    value.diagnosis?.clients || "",
+                    value.diagnosis?.hours || "",
+                    value.diagnosis?.riskAmount || ""
+                ];
+                // 各項目をダブルクォートで囲んでカンマ区切りにする
+                csvRows.push(row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(","));
             }
         }
 
-        const csvContent = rows.map(r => r.join(",")).join("\n");
+        // Excel文字化け防止（BOM付きUTF-8）
+        const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+        const csvContent = csvRows.join("\r\n");
 
-        return new Response(csvContent, {
+        return new Response(new Blob([bom, csvContent], { type: "text/csv" }), {
             headers: {
                 "Content-Type": "text/csv; charset=utf-8",
-                "Content-Disposition": 'attachment; filename="leads_export.csv"',
-                "Access-Control-Allow-Origin": "*", // テスト用
+                "Content-Disposition": 'attachment; filename="logitsuku_leads.csv"',
             },
         });
-
     } catch (error) {
-        // エラー内容をレスポンスとして返す（デバッグ用）
-        return new Response(`Internal Error: ${error.message}`, { status: 500 });
+        return new Response(`Error: ${error.message}`, { status: 500 });
     }
 }
