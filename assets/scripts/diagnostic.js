@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
         // フロントエンドのJSが result.downloadUrl を期待しているので、本番のPDFパスを返す
         return new Response(JSON.stringify({
             success: true,
-            downloadUrl: "https://your-domain.com/path-to-your-tool.pdf" // ここを実際のPDFパスへ
+            downloadUrl: "https://logitsuku-ai.uplink-wiz.net/assets/tools/check-list.zip" // ここを実際のZIPパスへ
         }), {
             status: 200,
             headers: { "Content-Type": "application/json" }
