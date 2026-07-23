@@ -82,7 +82,7 @@
             diagnosticData.hours = 0;
             diagnosticData.risk = 0;
         }
-        document.getElementById('step-diagnostic').style.display = 'none';
-        document.getElementById('step-form').style.display = 'block';
+        document.getElementById('step-diagnostic').classList.add('is-hidden');
+        document.getElementById('step-form').classList.remove('is-hidden');
     };
 })();

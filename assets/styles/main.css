@@ -1,254 +1,417 @@
+:root {
+    --navy: #004a7c;
+    --navy-deep: #00365a;
+    --gold: #ffcc00;
+    --red: #ff3333;
+    --red-deep: #cc0000;
+    --orange: #d64a00;
+    --bg: #f4f7f6;
+    --paper: #ffffff;
+    --text: #333333;
+    --muted: #666666;
+    --line: #dddddd;
+    --warm-th: #ffe0b2;
+    --compare-th: #e6f3ff;
+    --positive: #008000;
+    --font-display: "Shippori Mincho", "Hiragino Mincho ProN", serif;
+    --font-body: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-    line-height: 1.7;
-    color: #333;
     margin: 0;
-    padding: 0;
-    background-color: #f4f7f6;
+    font-family: var(--font-body);
+    line-height: 1.7;
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+.page {
+    min-height: 100vh;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.hero {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: clamp(2.5rem, 6vw, 4.5rem) 1.25rem;
+    text-align: center;
+}
+
+.hero-inner {
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.hero-kicker {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.brand {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.2vw, 2.85rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.hero h1 {
+    margin: 0 auto 1rem;
+    max-width: 22em;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.hero-line {
+    display: block;
+}
+
+.highlight {
+    background-color: #fffacd;
+    color: var(--navy-deep);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.hero-lead {
+    margin: 0 auto 1.75rem;
+    max-width: 36em;
+    font-size: 1.08rem;
+}
+
+.cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--red);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary:hover {
+    background-color: var(--red-deep);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #3d9140;
+}
+
+.btn-block {
+    width: 100%;
 }
 
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem 1.25rem 3rem;
+    background-color: var(--paper);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
 }
 
-header {
-    background-color: #004a7c;
-    color: white;
-    padding: 40px 0;
-    text-align: center;
-    margin-bottom: 30px;
+.section {
+    padding: 2rem 0;
+    border-bottom: 1px solid #eeeeee;
 }
 
-header h1 {
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    line-height: 1.4;
-}
-
-header .service-name {
-    font-size: 3em;
-    color: #ffcc00;
-    font-weight: 900;
-    display: block;
-    margin: 10px 0;
-}
-
-header p {
-    font-size: 1.2em;
-}
-
-section {
-    padding: 30px 0;
-    border-bottom: 1px solid #eee;
+.section:last-of-type {
+    border-bottom: none;
 }
 
 h2 {
-    font-size: 2em;
-    color: #004a7c;
-    border-left: 5px solid #ffcc00;
-    padding-left: 10px;
-    margin-bottom: 20px;
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 5px solid var(--gold);
+    padding-left: 0.7rem;
+    line-height: 1.45;
 }
 
 h3 {
-    color: #d64a00;
-    margin-top: 25px;
+    color: var(--orange);
+    margin: 1.5rem 0 0.85rem;
+    font-size: 1.05rem;
+    line-height: 1.45;
 }
 
-.cta-button {
-    display: block;
-    width: 80%;
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 15px;
-    background-color: #ff3333;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1.3em;
-    font-weight: bold;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
+.alert-heading {
+    color: var(--red-deep);
 }
 
-.cta-button:hover {
-    background-color: #cc0000;
+.bullet-list {
+    list-style-type: square;
+    padding-left: 1.35rem;
+}
+
+.feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.feature-list li {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.emphasis-note {
+    margin-top: 1.25rem;
+    font-weight: 700;
+    color: var(--red-deep);
 }
 
 .plan-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 1.25rem;
     text-align: left;
+    font-size: 0.95rem;
 }
 
 .plan-table th,
 .plan-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
+    border: 1px solid var(--line);
+    padding: 0.75rem 0.85rem;
+    vertical-align: top;
 }
 
 .plan-table th {
     background-color: #f2f2f2;
-    color: #004a7c;
+    color: var(--navy);
     width: 25%;
 }
 
-.highlight {
-    background-color: #fffacd;
-    padding: 3px 5px;
-    border-radius: 4px;
-    font-weight: bold;
+.th-warm {
+    background-color: var(--warm-th) !important;
 }
 
 .cost-table td {
-    font-weight: bold;
+    font-weight: 700;
+}
+
+.total-row td {
+    text-align: right;
+    font-weight: 700;
+    background: #fff8f8;
+}
+
+.total-row .danger,
+.danger {
+    color: var(--red-deep);
+    font-weight: 700;
+}
+
+.featured-plan td {
+    background: #f7fbff;
+}
+
+.strong {
+    font-weight: 700;
 }
 
 .comparison-table th {
-    background-color: #e6f3ff;
-    text-align: center;
+    background-color: var(--compare-th);
+    text-align: left;
 }
 
 .comparison-table td {
-    text-align: center;
+    text-align: left;
 }
 
 .comparison-table .feature {
     text-align: left;
-    font-weight: bold;
+    font-weight: 700;
+}
+
+.plan-table th,
+.plan-table td {
+    text-align: left;
 }
 
 .comparison-table .negative {
-    color: #cc0000;
-    font-weight: bold;
+    color: var(--red-deep);
+    font-weight: 700;
 }
 
 .comparison-table .positive {
-    color: #008000;
-    font-weight: bold;
+    color: var(--positive);
+    font-weight: 700;
 }
 
 .diagnostic-container {
     background: #fff;
-    border: 2px solid #004a7c;
+    border: 2px solid var(--navy);
     border-radius: 12px;
-    padding: 30px;
+    padding: 1.75rem;
     max-width: 600px;
-    margin: 40px auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .slider-group {
-    margin: 25px 0;
+    margin: 1.5rem 0;
 }
 
 .slider-group label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
 }
 
 .slider-group input {
     width: 100%;
     cursor: pointer;
+    accent-color: var(--navy);
 }
 
 .risk-display {
     background: #fff5f5;
     border-radius: 8px;
-    padding: 20px;
+    padding: 1.25rem;
     text-align: center;
-    margin: 20px 0;
+    margin: 1.25rem 0;
 }
 
 #risk-amount {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #cc0000;
-}
-
-.btn-primary {
-    background: #ff3333;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-primary:hover {
-    background: #cc0000;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--red-deep);
 }
 
 .skip-link {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 1rem;
 }
 
 .skip-link a {
-    color: #666;
+    color: var(--muted);
     font-size: 0.9rem;
-    text-decoration: underline;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
     text-align: left;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 0.35rem;
+    font-weight: 700;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid #cccccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    font: inherit;
 }
 
 .form-note {
     font-size: 0.8rem;
-    color: #888;
-    margin-top: 10px;
+    color: #888888;
+    margin-top: 0.75rem;
 }
 
-input[type="range"] {
-    accent-color: #004a7c;
-    /* スライダーのつまみの色を紺色に */
-}
+@media (max-width: 720px) {
+    .brand {
+        white-space: normal;
+        font-size: clamp(2rem, 9vw, 2.6rem);
+    }
 
-/* スマホ向けの調整 */
-@media (max-width: 600px) {
-    header .service-name {
-        font-size: 2em;
-        /* スマホでは少し小さく */
+    .hero h1 {
+        max-width: none;
     }
 
     .container {
-        padding: 10px;
+        padding: 1rem;
+        box-shadow: none;
     }
 
     .diagnostic-container {
-        padding: 15px;
-        /* 診断部分の余白を削る */
+        padding: 1rem;
     }
 
-    #risk-amount {
-        font-size: 1.8rem;
-        /* リスク金額がはみ出さないように */
+    .plan-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        min-width: 8.5rem;
+    }
+}
+
+@media (min-width: 721px) {
+    /* PCでは意図した3行折り返しを維持 */
+    .hero-line {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .btn {
+        transition: none;
     }
 }

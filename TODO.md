@@ -1,6 +1,26 @@
 # TODO（課題・問題点）
 
-## 2026-07-09 作業ログ（本日実施分）
+## 2026-07-23 作業ログ
+
+### LP デザイン調整
+
+- [x] 士業向けに元配色（紺 / 黄 / 赤）を維持しつつレイアウトを整理
+- [x] 強い訴求コピー・コスト表・比較表（✅ / ❌）を維持
+- [x] 見出し短縮・フォントサイズ縮小でPC折り返しを改善
+- [x] ヒーロー文言を短縮
+- [x] 表を左揃えに変更
+- [x] `README.md` に起動・デプロイ手順を追記
+- [ ] 最新LPデザインを Cloudflare Pages へ再デプロイ
+
+### デプロイ運用メモ
+
+- Cloudflare ログインは `uplink.jp@gmail.com`（`uplink.wiz@gmail.com` だと別アカウントになる）
+- プロジェクト名: `logitsuku-uplink-wiz-net`
+- コマンド: `npx wrangler pages deploy . --project-name=logitsuku-uplink-wiz-net --commit-dirty=true`
+
+---
+
+## 2026-07-09 作業ログ
 
 ### LP / API（logitsuku.uplink-wiz.net）
 
@@ -37,6 +57,7 @@
 - [ ] Windows 実機での最終起動確認（`colorama` フォールバック反映後）
 - [ ] `windows/` 一式を ZIP 配布物と完全同期（現状は部分更新）
 - [ ] Windows 向け単体 `.exe`（PyInstaller）を CI（Windows runner）で自動ビルド
+- [ ] 最新LPデザインを Cloudflare Pages へ再デプロイ
 
 ---
 
@@ -49,7 +70,7 @@
 
 ## P1: 品質・運用性の改善
 
-- [ ] `index.html` のインラインスタイルを `assets/styles/main.css` に移して保守性を上げる。
+- [x] `index.html` のインラインスタイルを `assets/styles/main.css` に移して保守性を上げる。
 - [ ] APIエラー表示を改善する（ユーザー向け文言とログ用詳細を分離）。
 - [ ] `wrangler` 実行時の `compatibility_date` を明示設定し、実行環境差分を減らす。
 - [ ] ローカル開発用 `.dev.vars` を整備（`ADMIN_EXPORT_USER` / `ADMIN_EXPORT_PASSWORD` / KV バインディング）
