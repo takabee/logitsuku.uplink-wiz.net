@@ -18,7 +18,7 @@
   - できる: 36協定系チェック（単月100h、45h超過回数、複数月平均80h、年720h）
   - できない: 変形労働・裁量・管理監督者除外・独自就業規則ロジック等
   - 無料版制限（従業員10名まで）の意味を「お試し」と正しく伝える
-- [ ] **最新LPデザインを Cloudflare Pages へ再デプロイ**
+- [x] **最新LPデザインを Cloudflare Pages へ再デプロイ**
   - `uplink.jp@gmail.com` で `logitsuku-uplink-wiz-net` に deploy
 
 ### P1（有料転換を上げる）
