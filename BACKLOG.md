@@ -123,6 +123,8 @@
 4. `app.py`, `logic.py`, `templates/`, `sample-overtime.csv` を配置
 5. `run.bat` で起動確認
 6. `windows/` 一式を `check-list/windows/` として `assets/tools/check-list.zip` に同梱（実施済み）
+   - Cloudflare Pages は単ファイル **25 MiB 上限**のため、ZIP内の埋め込みPythonから実行不要ファイルを除外して収録（`python.cat` / `pythonw.exe` / `sqlite3.dll` / `_sqlite3.pyd` / `_msi.pyd` / `winsound.pyd` / `LICENSE.txt`）
+   - リポジトリの `windows/` フル一式はそのまま保持
 
 #### B. 単体 `.exe` 方式（将来・推奨）
 

@@ -195,6 +195,7 @@
 - `check-list/windows/`（推奨・Python不要）
   - 埋め込み Python 同梱の Windows 実行パッケージ
   - `run.bat` をダブルクリックで起動（事前の Python インストール不要）
+  - 注: Pages の 25 MiB 制限対応のため、ZIP同梱版は実行不要ファイルを一部除外（リポジトリ `windows/` はフル構成）
 - `check-list/OvertimeChecker-Windows.bat`（代替・Python 要）
   - Windows 用ワンクリック起動ランチャー（初回セットアップ後に起動）
 - `check-list/windows-src/`
