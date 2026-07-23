@@ -192,10 +192,13 @@
 
 - `check-list/OvertimeChecker.app`
   - ダウンロード後にダブルクリックで起動可能な macOS 実行アプリ
-- `check-list/OvertimeChecker-Windows.bat`
+- `check-list/windows/`（推奨・Python不要）
+  - 埋め込み Python 同梱の Windows 実行パッケージ
+  - `run.bat` をダブルクリックで起動（事前の Python インストール不要）
+- `check-list/OvertimeChecker-Windows.bat`（代替・Python 要）
   - Windows 用ワンクリック起動ランチャー（初回セットアップ後に起動）
 - `check-list/windows-src/`
-  - Windows ランチャーから実行する Flask アプリ本体（`app.py`, `logic.py`, `templates`, `requirements.txt`）
+  - 上記 bat ランチャーから実行する Flask アプリ本体（`app.py`, `logic.py`, `templates`, `requirements.txt`）
 - `check-list/sample-overtime.csv`
   - 初回確認用のサンプルCSV
 - `check-list/README_DOWNLOAD.txt`

@@ -1,5 +1,68 @@
 # TODO（課題・問題点）
 
+## 製品・営業改善（評価ベース / 2026-07-23）
+
+優先度の定義:
+- **P0**: 期待値ギャップや信頼失墜につながるため、すぐ直す
+- **P1**: 有料転換・納得感を上げるために次にやる
+- **P2**: 中長期で製品競争力を上げる
+- **P3**: 運用・品質の基盤強化（並行可）
+
+### P0（最優先）
+
+- [ ] **LPと無料ツールの約束を揃える**
+  - 無料版は「残業上限の一次スクリーニング（OvertimeChecker）」と明記
+  - 「法令保証システム」は有料プランの範囲だと分かるようにする
+  - 現状の最大リスク: 期待値ギャップによる試用後離脱
+- [ ] **無料版のできること / できないことをLPとツール画面の両方に明示**
+  - できる: 36協定系チェック（単月100h、45h超過回数、複数月平均80h、年720h）
+  - できない: 変形労働・裁量・管理監督者除外・独自就業規則ロジック等
+  - 無料版制限（従業員10名まで）の意味を「お試し」と正しく伝える
+- [ ] **最新LPデザインを Cloudflare Pages へ再デプロイ**
+  - `uplink.jp@gmail.com` で `logitsuku-uplink-wiz-net` に deploy
+
+### P1（有料転換を上げる）
+
+- [ ] **デモ結果を営業成果物にする**
+  - 違反一覧 → 顧問先への指摘文テンプレ → 改善提案の流れを見せる
+  - 「先生の仕事が楽になる」を無料体験で実感させる
+- [ ] **価格ハードルを下げる前段オファーを用意する**
+  - 例: 顧問先1社スポット診断、PoC 1ヶ月、オンライン説明会
+  - いきなり初期40万円に飛ばない導線をLP/営業資料に追加
+- [ ] **ROI話法を自事務所実数ベースに寄せる**
+  - 110万円は入口として残す
+  - 面談では「顧問先数 × Excel更新時間 × 時間単価」に置き換える説明を用意
+- [ ] **対象ペルソナを絞って訴求する**
+  - 主対象: Excelで36協定管理している中小社労士事務所
+  - 勤怠クラウド利用者は別メッセージ（または対象外と明示）
+
+### P2（製品競争力）
+
+- [ ] **有料プランの提供範囲を具体例で見せる**
+  - 独自CSV対応、法改正時の修正、名入れ、顧問先規模などの実施例
+- [ ] **責任分界・監修体制を文書化する**
+  - 法令判断の主体、免責、更新頻度、問い合わせ窓口を明記
+  - 士業が契約前に必ず聞く点への回答を用意
+- [ ] **無料版の価値上限を少し上げる（必要なら）**
+  - 例: デモ出力のPDF/CSVエクスポート、指摘文テンプレ同梱
+  - ※制限緩和しすぎて有料の必然性を壊さないこと
+- [ ] **LP側仕様と `shigyo-tool` 実体仕様の差分を完全同期**
+  - SPEC / LP / ツールREADMEの三者一致
+
+### P3（運用・配布・品質）
+
+- [ ] Windows 実機での最終起動確認（`colorama` フォールバック反映後）
+- [x] `windows/` 一式を ZIP 配布物と完全同期（`check-list/windows/` として同梱）
+- [ ] Windows 向け単体 `.exe` を CI（windows-latest）で自動ビルド
+- [ ] 配布ZIPのバージョン管理（固定URL返却の見直し）
+- [ ] APIエラー表示改善（ユーザー向け文言とログ詳細の分離）
+- [ ] `wrangler` の `compatibility_date` 明示
+- [ ] ローカル用 `.dev.vars` 整備
+- [ ] `POST /api/download` / `GET /api/admin/export-csv` のテスト追加
+- [ ] 主要UIフローのE2Eテスト追加
+
+---
+
 ## 2026-07-23 作業ログ
 
 ### LP デザイン調整
@@ -20,76 +83,12 @@
 
 ---
 
-## 2026-07-09 作業ログ
+## 2026-07-09 作業ログ（完了分）
 
-### LP / API（logitsuku.uplink-wiz.net）
-
-- [x] `functions/api/admin/export-csv.js` に Basic 認証を追加（`ADMIN_EXPORT_USER` / `ADMIN_EXPORT_PASSWORD`）
-- [x] `functions/api/download.js` の入力値検証を強化（必須項目・メール形式・診断パラメータ型/範囲/整合性）
-- [x] `DATA_POLICY.md` を作成（個人情報の保存期間・削除フロー・問い合わせ対応）
-- [x] `SPEC.md` を整備（仕様・動作確認手順・配布ZIP仕様）
-- [x] `BACKLOG.md` を作成
-- [x] フロント修正（`index.html` / `diagnostic.js`：送信ボタン制御、エラー表示改善、アクセシビリティ）
+- [x] API Basic認証 / 入力バリデーション強化
+- [x] `DATA_POLICY.md` / `SPEC.md` / `BACKLOG.md` 作成
+- [x] フロント送信制御・アクセシビリティ改善
 - [x] ダウンロードURLを `/assets/tools/check-list.zip` に変更
-
-### shigyo-tool
-
-- [x] 実行最小構成へ整理（`app.py` / `logic.py` / `templates` / `requirements.txt`）
-- [x] Mac 向け `OvertimeChecker.app` を PyInstaller でビルド
-- [x] `assets/tools/check-list.zip` を再生成（Mac `.app` + サンプルCSV + README）
-
-### Windows 配布物
-
-- [x] `assets/tools/OvertimeChecker-Windows.bat` + `windows-src/` を ZIP に同梱（Python 要・初回セットアップ型）
-- [x] `windows/` ディレクトリに Python 不要版を作成（埋め込み Python 3.9 同梱）
-- [x] `run.bat` の文字化け・構文エラーを修正（ASCII のみ・絶対パス・`goto` ラベル方式）
-- [x] `app.py` に `blinker` / `colorama` フォールバックを追加
-- [x] `app.py` に `sys.path` へ `BASE_DIR` を追加（`logic` モジュール解決）
-- [x] `run.bat` に `logic.py` 存在チェックを追加
-
-### ローカル開発
-
-- [x] `npx wrangler pages dev .` で LP 起動確認（`http://localhost:8788`）
-- [x] `python app.py` で shigyo-tool 起動確認
-
-### 未完了・次回対応
-
-- [ ] Windows 実機での最終起動確認（`colorama` フォールバック反映後）
-- [ ] `windows/` 一式を ZIP 配布物と完全同期（現状は部分更新）
-- [ ] Windows 向け単体 `.exe`（PyInstaller）を CI（Windows runner）で自動ビルド
-- [ ] 最新LPデザインを Cloudflare Pages へ再デプロイ
-
----
-
-## P0: 早急に対応すべき項目
-
-- [x] `functions/api/admin/export-csv.js` に認証を追加する（最低でも Basic 認証、推奨は Cloudflare Access）。
-- [x] `functions/api/download.js` の入力値検証を強化する（`clients/hours/risk/skipped` の型・範囲チェック）。
-- [x] 個人情報の取り扱い方針を定義する（保存期間、削除手順、問い合わせ対応フロー）。
-- [x] `shigyo-tool` を実行最小構成に整理（`app.py` / `logic.py` / `templates` / `requirements.txt`）。
-
-## P1: 品質・運用性の改善
-
-- [x] `index.html` のインラインスタイルを `assets/styles/main.css` に移して保守性を上げる。
-- [ ] APIエラー表示を改善する（ユーザー向け文言とログ用詳細を分離）。
-- [ ] `wrangler` 実行時の `compatibility_date` を明示設定し、実行環境差分を減らす。
-- [ ] ローカル開発用 `.dev.vars` を整備（`ADMIN_EXPORT_USER` / `ADMIN_EXPORT_PASSWORD` / KV バインディング）
-
-## P2: `shigyo-tool` 連携の課題
-
-- [x] ダウンロードZIP（`assets/tools/check-list.zip`）を再生成し、`OvertimeChecker.app` と `sample-overtime.csv` を同梱。
-- [x] Windows 向け起動ランチャー（`OvertimeChecker-Windows.bat`）と実行ソース一式（`windows-src/`）を同梱。
-- [x] `windows/` ディレクトリに Python不要版（埋め込みPython同梱）を作成。
-- [x] Windows 起動失敗時のフォールバック対応（`blinker` 未導入環境でも起動）。
-- [x] Windows 起動失敗時のフォールバック対応（`colorama` 未導入環境でも起動）。
-- [ ] 固定の ZIP URL 返却をやめ、配布バージョンと紐づく仕組みにする。
-- [ ] `shigyo-tool` のビルド成果物（例: `OvertimeChecker.app`）の配布先管理を明文化する。
-- [ ] LP 側仕様と `shigyo-tool` 実体仕様の差分（無料版制限、機能範囲）を同期する。
-- [ ] Windows 単体 `.exe` を GitHub Actions（windows-latest）でビルドするパイプラインを追加する。
-
-## テスト関連
-
-- [ ] `POST /api/download` の正常系・異常系テストを追加する。
-- [ ] `GET /api/admin/export-csv` のCSV列・エスケープ・大量件数テストを追加する。
-- [ ] 主要UIフロー（診断→フォーム→ダウンロード）のE2Eテストを追加する。
-- [ ] Windows `run.bat` 起動のスモークテスト手順を `SPEC.md` に追記する。
+- [x] `shigyo-tool` 最小構成化、Mac `.app` ビルド、ZIP再生成
+- [x] Windows ランチャー / `windows/` 埋め込みPython版作成、起動フォールバック対応
+- [x] インラインスタイルを CSS へ集約

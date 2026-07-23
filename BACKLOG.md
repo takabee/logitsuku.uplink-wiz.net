@@ -32,8 +32,9 @@
 
 ### Story 2-3 配布ZIPの構成（現状）
 - Mac: `check-list/OvertimeChecker.app`（PyInstaller ビルド済み）
-- Windows（ZIP内）: `OvertimeChecker-Windows.bat` + `windows-src/`（Python 要・初回 venv セットアップ）
-- Windows（リポジトリ内）: `windows/` ディレクトリ（埋め込み Python 同梱・Python 事前インストール不要）
+- Windows（ZIP内・推奨）: `check-list/windows/`（埋め込み Python 同梱・`run.bat`・Python 事前インストール不要）
+- Windows（ZIP内・代替）: `OvertimeChecker-Windows.bat` + `windows-src/`（Python 要・初回 venv セットアップ）
+- Windows（リポジトリ内）: `windows/` ディレクトリ（ZIP と同内容）
 - 共通: `sample-overtime.csv`, `README_DOWNLOAD.txt`
 
 ## Epic 3: 品質改善
@@ -121,7 +122,7 @@
 3. `pip install --target Lib/site-packages flask psutil`（**Windows 上で実行**）
 4. `app.py`, `logic.py`, `templates/`, `sample-overtime.csv` を配置
 5. `run.bat` で起動確認
-6. `windows/` 一式を ZIP 化して `assets/tools/check-list.zip` に同梱
+6. `windows/` 一式を `check-list/windows/` として `assets/tools/check-list.zip` に同梱（実施済み）
 
 #### B. 単体 `.exe` 方式（将来・推奨）
 
@@ -143,7 +144,8 @@
 
 ### Story 5-7 受け入れチェックリスト（Windows 配布前）
 
-- [ ] `windows/` フォルダ一式が揃っている（`python/`, `app.py`, `logic.py`, `templates/`, `run.bat`, `sample-overtime.csv`）
+- [x] `windows/` フォルダ一式が揃っている（`python/`, `app.py`, `logic.py`, `templates/`, `run.bat`, `sample-overtime.csv`）
+- [x] `check-list.zip` に `check-list/windows/` として同梱されている
 - [ ] `run.bat` が ASCII のみ（日本語メッセージなし）
 - [ ] `python\python.exe` が存在する
 - [ ] `python\Lib\site-packages\flask` が存在する
