@@ -73,7 +73,7 @@
 - [x] ヒーロー文言を短縮
 - [x] 表を左揃えに変更
 - [x] `README.md` に起動・デプロイ手順を追記
-- [ ] 最新LPデザインを Cloudflare Pages へ再デプロイ
+- [x] 最新LPデザインを Cloudflare Pages へ再デプロイ
 
 ### デプロイ運用メモ
 
