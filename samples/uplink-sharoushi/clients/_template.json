@@ -1,0 +1,12 @@
+{
+  "slug": "example-office",
+  "name": "例・〇〇社労士事務所",
+  "modules": {
+    "01-overtime-36": {
+      "spreadsheetId": "REPLACE_ME",
+      "scriptId": "REPLACE_ME",
+      "deployedAt": null,
+      "notes": "テンプレート。実顧客では deploy スクリプトが上書きする。"
+    }
+  }
+}

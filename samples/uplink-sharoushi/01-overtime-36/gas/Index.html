@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>残業上限チェック</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1e3a5f;
+      --navy-deep: #14263f;
+      --ink: #1a2332;
+      --muted: #5c6b7a;
+      --line: #d5dde8;
+      --bg: #eef2f7;
+      --card: #ffffff;
+      --warn: #b42318;
+      --warn-bg: #fff1f0;
+      --ok: #0f7b4c;
+      --ok-bg: #ecfdf3;
+      --gold: #c4a35a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Zen Kaku Gothic New", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 400px at 10% -10%, rgba(196,163,90,.18), transparent 60%),
+        linear-gradient(180deg, #dfe7f1 0%, var(--bg) 45%, #e8edf4 100%);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 48px; }
+    .hero {
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+      color: #fff;
+      border-radius: 18px;
+      padding: 26px 28px;
+      box-shadow: 0 12px 40px rgba(20,38,63,.22);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(196,163,90,.2);
+    }
+    .kicker {
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.75);
+    }
+    .brand {
+      font-family: "Shippori Mincho", serif;
+      font-size: 26px;
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+    .sub { margin: 0; color: rgba(255,255,255,.85); font-size: 14px; }
+    .meta {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 16px;
+    }
+    .chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin: 18px 0 8px;
+      align-items: center;
+    }
+    label.file-btn {
+      appearance: none; border: 0; cursor: pointer;
+      border-radius: 12px; padding: 12px 16px;
+      font-weight: 700; font-size: 14px;
+      font-family: inherit;
+      background: #fff; color: var(--navy); border: 1px solid var(--line);
+      display: inline-flex; align-items: center;
+    }
+    label.file-btn input { display: none; }
+    label.file-btn:has(input:disabled) { opacity: .55; cursor: wait; }
+    .io-note {
+      width: 100%;
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    button {
+      appearance: none; border: 0; cursor: pointer;
+      border-radius: 12px; padding: 12px 16px;
+      font-weight: 700; font-size: 14px;
+      font-family: inherit;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    button:active { transform: translateY(1px); }
+    button:disabled { opacity: .55; cursor: wait; }
+    .btn-primary { background: var(--gold); color: var(--navy-deep); }
+    .btn-secondary { background: #fff; color: var(--navy); border: 1px solid var(--line); }
+    .btn-ghost { background: transparent; color: var(--navy); border: 1px dashed var(--line); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .stat strong { display: block; font-size: 28px; line-height: 1.1; color: var(--navy); }
+    .stat span { font-size: 12px; color: var(--muted); }
+    .stat.warn strong { color: var(--warn); }
+    .stat.ok strong { color: var(--ok); }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .panel-h {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 10px;
+    }
+    .panel-h h2 { margin: 0; font-size: 15px; color: var(--navy); }
+    .hint { font-size: 12px; color: var(--muted); }
+    .list { padding: 12px; display: grid; gap: 10px; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      background: #fbfcfe;
+    }
+    .card.ng {
+      border-color: #f3c0bb;
+      background: var(--warn-bg);
+    }
+    .card.ok {
+      border-color: #b7e4c7;
+      background: var(--ok-bg);
+    }
+    .card-top {
+      display: flex; justify-content: space-between; gap: 10px; align-items: flex-start;
+    }
+    .name { font-weight: 700; font-size: 16px; }
+    .id { color: var(--muted); font-size: 12px; }
+    .pill {
+      border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700;
+      white-space: nowrap;
+    }
+    .pill.ng { background: #fee4e2; color: var(--warn); }
+    .pill.ok { background: #d1fadf; color: var(--ok); }
+    .metrics {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      margin-top: 10px; font-size: 13px;
+    }
+    .metrics b { color: var(--navy); }
+    .violations {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid; gap: 6px;
+    }
+    .violations li {
+      font-size: 12px;
+      background: rgba(255,255,255,.7);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid rgba(180,35,24,.12);
+    }
+    .status {
+      min-height: 20px;
+      margin: 8px 2px 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .status.err { color: var(--warn); }
+    .footer {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .footer a { color: var(--navy); }
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: 1fr; }
+      .brand { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <p class="kicker">SAMPLE DEMO · 36協定 / 残業上限の一次チェック</p>
+      <h1 class="brand">AI版 ロジ・つく・労務</h1>
+      <p class="sub" id="subtitle">顧問先の残業実績を、再現可能な基準で見える化します。</p>
+      <div class="meta" id="meta"></div>
+    </header>
+
+    <div class="toolbar">
+      <button class="btn-primary" id="btn-demo" type="button">デモデータで判定する</button>
+      <button class="btn-secondary" id="btn-template" type="button">表フォーマットをダウンロード</button>
+      <label class="file-btn" id="label-upload">CSVをアップロードして判定<input id="file-upload" type="file" accept=".csv,text/csv" /></label>
+      <button class="btn-secondary" id="btn-run" type="button">シートの値で再判定</button>
+      <button class="btn-ghost" id="btn-sheet" type="button">シートを開く</button>
+      <p class="io-note">テンプレ列: 従業員ID, 氏名, 年月（例 2025/04）, 残業時間（h） — アップロードするとシートに反映して判定します。</p>
+    </div>
+    <p class="status" id="status">準備中…</p>
+
+    <div class="stats">
+      <div class="stat"><strong id="s-total">-</strong><span>判定行（従業員×年度）</span></div>
+      <div class="stat warn"><strong id="s-ng">-</strong><span>違反あり</span></div>
+      <div class="stat ok"><strong id="s-ok">-</strong><span>問題なし</span></div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-h">
+        <h2>判定結果</h2>
+        <span class="hint">単月100h / 45h超過回数 / 複数月平均80h / 年720h</span>
+      </div>
+      <div class="list" id="results">
+        <div class="hint" style="padding:8px">まだ判定していません。「デモデータで判定する」を押してください。</div>
+      </div>
+    </section>
+
+    <p class="footer">
+      本画面はヒアリング用デモです。法令判断の最終責任は社労士側にあります。<br />
+      データはスプレッドシート上に保存され、判定結果タブにも同期されます。
+    </p>
+  </div>
+
+  <script>
+    var sheetUrl = '';
+
+    function setBusy(busy, msg) {
+      ['btn-demo', 'btn-run', 'btn-sheet', 'btn-template'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.disabled = busy;
+      });
+      document.getElementById('file-upload').disabled = busy;
+      var el = document.getElementById('status');
+      el.className = 'status';
+      el.textContent = msg || '';
+    }
+
+    function setError(msg) {
+      var el = document.getElementById('status');
+      el.className = 'status err';
+      el.textContent = msg;
+    }
+
+    function renderMeta(meta) {
+      sheetUrl = meta.sheetUrl || '';
+      document.getElementById('subtitle').textContent =
+        meta.office + ' ／ 顧問先: ' + meta.client;
+      document.getElementById('meta').innerHTML =
+        '<span class="chip">入力行 ' + meta.inputRows + '</span>' +
+        '<span class="chip">更新 ' + meta.updatedAt + '</span>';
+    }
+
+    function renderResults(payload) {
+      if (payload.error) {
+        setError(payload.error);
+        document.getElementById('btn-demo').disabled = false;
+        document.getElementById('btn-run').disabled = false;
+        document.getElementById('btn-template').disabled = false;
+        document.getElementById('file-upload').disabled = false;
+        return;
+      }
+      var summary = payload.summary || { total: 0, ng: 0, ok: 0 };
+      document.getElementById('s-total').textContent = summary.total;
+      document.getElementById('s-ng').textContent = summary.ng;
+      document.getElementById('s-ok').textContent = summary.ok;
+
+      var root = document.getElementById('results');
+      var rows = payload.results || [];
+      if (!rows.length) {
+        root.innerHTML = '<div class="hint" style="padding:8px">結果がありません。</div>';
+        setBusy(false, '結果なし');
+        return;
+      }
+      root.innerHTML = rows.map(function (r) {
+        var ng = r.violations && r.violations.length > 0;
+        var pills = ng
+          ? '<span class="pill ng">要確認</span>'
+          : '<span class="pill ok">問題なし</span>';
+        var vhtml = '';
+        if (ng) {
+          vhtml = '<ul class="violations">' + r.violations.map(function (v) {
+            return '<li>' + escapeHtml(v) + '</li>';
+          }).join('') + '</ul>';
+        }
+        return (
+          '<article class="card ' + (ng ? 'ng' : 'ok') + '">' +
+            '<div class="card-top">' +
+              '<div><div class="name">' + escapeHtml(r.name || '-') + '</div>' +
+              '<div class="id">' + escapeHtml(r.id) + ' · 年度 ' + r.fy + '</div></div>' +
+              pills +
+            '</div>' +
+            '<div class="metrics">' +
+              '<div>年間残業 <b>' + r.total + 'h</b></div>' +
+              '<div>45h超過 <b>' + r.over45 + '回</b></div>' +
+            '</div>' +
+            vhtml +
+          '</article>'
+        );
+      }).join('');
+      setBusy(false, '判定完了（読取 ' + (payload.recordCount || 0) + ' 件）');
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function downloadText(filename, text) {
+      var blob = new Blob(['\uFEFF' + text], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function withGas(fnName, arg) {
+      setBusy(true, '処理中…');
+      google.script.run
+        .withSuccessHandler(function (res) {
+          if (fnName === 'apiGetMeta') {
+            renderMeta(res);
+            setBusy(false, '準備完了。テンプレDL / CSVアップロードも使えます。');
+            return;
+          }
+          if (fnName === 'apiGetTemplateCsv') {
+            downloadText('残業上限チェック_テンプレート.csv', res);
+            setBusy(false, 'テンプレートをダウンロードしました。');
+            return;
+          }
+          renderResults(res);
+          google.script.run.withSuccessHandler(renderMeta).apiGetMeta();
+        })
+        .withFailureHandler(function (err) {
+          setBusy(false);
+          setError(err && err.message ? err.message : String(err));
+        })[fnName](arg);
+    }
+
+    document.getElementById('btn-demo').addEventListener('click', function () {
+      withGas('apiSetupDemoAndCheck');
+    });
+    document.getElementById('btn-run').addEventListener('click', function () {
+      withGas('apiRunCheck');
+    });
+    document.getElementById('btn-template').addEventListener('click', function () {
+      withGas('apiGetTemplateCsv');
+    });
+    document.getElementById('file-upload').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      e.target.value = '';
+      if (!f) return;
+      setBusy(true, 'CSVを読み込み中…');
+      var reader = new FileReader();
+      reader.onload = function () {
+        withGas('apiImportCsvAndCheck', String(reader.result || ''));
+      };
+      reader.onerror = function () {
+        setBusy(false);
+        setError('CSVの読み込みに失敗しました。');
+      };
+      reader.readAsText(f, 'UTF-8');
+    });
+    document.getElementById('btn-sheet').addEventListener('click', function () {
+      if (sheetUrl) window.open(sheetUrl, '_blank');
+    });
+
+    withGas('apiGetMeta');
+  </script>
+</body>
+</html>

@@ -35,6 +35,25 @@
 - [ ] **対象ペルソナを絞って訴求する**
   - 主対象: Excelで36協定管理している中小社労士事務所
   - 勤怠クラウド利用者は別メッセージ（または対象外と明示）
+- [ ] **初回ヒアリング台本を作る（そのまま読める版）**
+  - 所要15〜30分想定
+  - 聞くこと: 現状の残業/36協定管理手段、顧問先規模、痛み、CSV可否
+  - 先に境界線を伝える: 法令判断は先生／実装はこちら
+  - 締め: スポット（1社試作）への次アクション提示
+  - 付録候補: スポット提案の一文見積テンプレ
+- [x] **売り手目標と顧客側成果物を `BUSINESS.md` に記録**
+  - 営業・業務目標（価格帯・ゴール・シナリオ）は売り手視点として分離
+  - 顧客（社労士）視点は「スタート→ゴールで何が残るか」を別節で整理
+- [x] **顧客Googleへ Cursor からデプロイする手順・スクリプトを追加**
+  - `samples/uplink-sharoushi/DEPLOY.md`
+  - `scripts/deploy-01-to-client.sh` / `push-01-client.sh`
+  - 顧客は編集者共有のみ。中身は clasp でこちらが投入
+- [x] **ヒアリング用サンプル（アップリンク社労士事務所・10領域）を `samples/uplink-sharoushi/` に作成**
+  - ①はGAS判定つき。②〜⑩は表＋質問たたき台
+  - [x] ①のローカルHTMLデモ `01-overtime-36/demo.html`
+  - [x] Googleデモ作成（GAS push済み） + **Web UI**  
+    シート: https://docs.google.com/spreadsheets/d/1fJcWExPd439VXQNGEl1PQREXcxmfHXRv3O7QpmOZ3ag/edit  
+    UI: https://script.google.com/macros/s/AKfycbzCw_59_NQEmQqIjQb_U5vx4KRCtZvPccEoIex3j_JgYkniutCZrEuNTcRsxjBr0hRo/exec
 
 ### P2（製品競争力）
 

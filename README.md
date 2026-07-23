@@ -26,6 +26,8 @@ npx wrangler pages deploy . --project-name=logitsuku-uplink-wiz-net --commit-dir
 - `SPEC.md` … 仕様・API・動作確認
 - `TODO.md` … 課題・作業ログ
 - `BACKLOG.md` … 中長期バックログ（Windows配布注意点含む）
+- `BUSINESS.md` … 売り手目標／契約社労士に残る成果物（スタート→ゴール）
+- `samples/uplink-sharoushi/` … 架空事務所向け10領域のSheets/GASサンプル（ヒアリング用）
 - `DATA_POLICY.md` … 個人情報運用ポリシー
 
 ## 関連ディレクトリ

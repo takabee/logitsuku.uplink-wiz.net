@@ -26,3 +26,10 @@ windows.zip
 # OS files
 .DS_Store
 Thumbs.db
+
+# Google clasp local binding
+**/.clasp.json
+**/.clasprc.json
+
+# Per-client clasp workdirs
+samples/uplink-sharoushi/clients/_work/
