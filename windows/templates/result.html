@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チェック結果 | 労務コンプライアンスチェッカー</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --violation-color: #ef4444;
+            --safe-color: #10b981;
+            --warning-bg: #fef2f2;
+            --warning-text: #b91c1c;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .meta-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f9fafb;
+            padding: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-safe {
+            background-color: #ecfdf5;
+            color: var(--safe-color);
+        }
+
+        .badge-violation {
+            background-color: var(--warning-bg);
+            color: var(--violation-color);
+            margin-bottom: 4px;
+        }
+
+        .violation-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .violation-list li {
+            font-size: 0.85rem;
+            color: var(--warning-text);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .violation-list li::before {
+            content: "⚠️";
+            margin-right: 6px;
+            font-size: 0.8rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background-color: #f9fafb;
+            border-color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .btn-back,
+            .btn-print {
+                display: none !important;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            header {
+                margin-bottom: 20px;
+            }
+        }
+
+        .btn-print {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 10px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>チェック結果レポート</h1>
+                <p class="meta-info">指定カラム: 年月=<code>{{ month_col }}</code>, 残業時間=<code>{{ overtime_col }}</code></p>
+            </div>
+            <div>
+                <button onclick="window.print();" class="btn-print">🖨️ 印刷 / PDF保存</button>
+                <a href="/" class="btn-back">← アップロードに戻る</a>
+            </div>
+        </header>
+
+        {% if errors %}
+        <div class="card" style="background-color: var(--warning-bg); border: 1px solid var(--violation-color);">
+            <h3 style="color: var(--warning-text); margin-top: 0;">⚠️ データの読み込みエラー</h3>
+            <p style="color: var(--warning-text);">以下の行はフォーマット不備のため無視されました。ファイルを確認してください。</p>
+            <ul style="color: var(--warning-text); margin-bottom: 0;">
+                {% for error in errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if results %}
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%">ID</th>
+                        <th style="width: 15%">氏名</th>
+                        <th style="width: 10%">年度 (FY)</th>
+                        <th style="width: 10%">年間総残業</th>
+                        <th style="width: 10%">45h超月数</th>
+                        <th style="width: 45%">判定・アラート</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in results %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td style="font-weight: 500;">{{ r.name }}</td>
+                        <td>{{ r.fiscal_year }}</td>
+                        <td>{{ r.total_overtime }} h</td>
+                        <td>
+                            {% if r.over_45_count > 6 %}
+                            <span style="color: var(--violation-color); font-weight: bold;">{{ r.over_45_count }}</span>
+                            {% else %}
+                            {{ r.over_45_count }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if r.violations %}
+                            <ul class="violation-list">
+                                {% for v in r.violations %}
+                                <li>{{ v }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <span class="badge badge-safe">問題なし</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="card empty-state">
+            <p>データが見つかりませんでした。</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

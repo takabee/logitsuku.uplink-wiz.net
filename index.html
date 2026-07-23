@@ -23,7 +23,7 @@
 
         <section>
             <h2>❌ 衝撃の事実：Excel依存が奪う、あなたの事務所の年間110万円</h2>
-            <p>先生方の専門的な時間は、Excelの「数式直し」に使うべきではありません。私たちは、従来のExcel管理に潜む**「見えないコスト」**を可視化しました。</p>
+            <p>先生方の専門的な時間は、Excelの「数式直し」に使うべきではありません。私たちは、従来のExcel管理に潜む<strong>「見えないコスト」</strong>を可視化しました。</p>
 
             <table class="plan-table cost-table">
                 <thead>
@@ -59,7 +59,7 @@
 
         <section>
             <h2>🔒 信頼性の根拠：なぜ「110万円」があなたのコストなのか？</h2>
-            <p>このコストは、感情論ではなく、**公開データと市場価格**に基づき算出された、経営判断のための合理的な数値です。</p>
+            <p>このコストは、感情論ではなく、<strong>公開データと市場価格</strong>に基づき算出された、経営判断のための合理的な数値です。</p>
             <ul style="list-style-type: square; padding-left: 20px;">
                 <li><strong>時間単価の根拠:</strong> 厚生労働省等の公開データを基に、先生の専門的な時間は最低でも1時間あたり1万円以上の価値があると設定しています。</li>
                 <li><strong>外部監査費の根拠:</strong> 法律事務所やITコンサルタントにロジック監査を依頼した場合の市場価格（最低20万円〜）を参考としています。</li>
@@ -72,10 +72,10 @@
         <section>
             <h2>💡 AI版 ロジ・つく・労務の圧倒的な優位性</h2>
             <ul style="list-style-type: none; padding: 0;">
-                <li>✅ **プログラミング不要:** Pythonなど、専門的なソフトのインストールは一切不要です。</li>
-                <li>✅ **導入はダブルクリック:** 納品は実行ファイルのみ。WindowsでもMacでも、**ダウンロードしてすぐに動きます**。</li>
-                <li>🤖 **AIがシステム化:** 弊社のAIが先生の指示をコードに変換し、エラーのないシステムコードとして生成します。</li>
-                <li>🛡️ **ロジックの堅牢性:** 誰も数式に触れない構造のため、**数式が壊れるリスクから永久に解放**されます。</li>
+                <li>✅ <strong>プログラミング不要:</strong> Pythonなど、専門的なソフトのインストールは一切不要です。</li>
+                <li>✅ <strong>導入はダブルクリック:</strong> 納品は実行ファイルのみ。WindowsでもMacでも、<strong>ダウンロードしてすぐに動きます</strong>。</li>
+                <li>🤖 <strong>AIがシステム化:</strong> 弊社のAIが先生の指示をコードに変換し、エラーのないシステムコードとして生成します。</li>
+                <li>🛡️ <strong>ロジックの堅牢性:</strong> 誰も数式に触れない構造のため、<strong>数式が壊れるリスクから永久に解放</strong>されます。</li>
             </ul>
         </section>
 
@@ -142,7 +142,7 @@
             </table>
 
             <h3 style="margin-top: 30px;">【結論】</h3>
-            <p>無料版はあくまで「お試し」です。先生の**事務所の専門性と法令リスクを守る**ためには、**プランBの「法令保証」**が必須の選択肢となります。</p>
+            <p>無料版はあくまで「お試し」です。先生の<strong>事務所の専門性と法令リスクを守る</strong>ためには、<strong>プランBの「法令保証」</strong>が必須の選択肢となります。</p>
         </section>
 
         <section id="download-section" class="diagnostic-container">
@@ -151,13 +151,13 @@
                 <p>スライダーを動かして、年間で失っている可能性のあるコストを算出します。</p>
 
                 <div class="slider-group">
-                    <label>顧問先数: <span id="val-clients">30</span> 社</label>
-                    <input type="range" id="input-clients" min="1" max="200" value="30">
+                    <label for="input-clients">顧問先数: <span id="val-clients">30</span> 社</label>
+                    <input type="range" id="input-clients" min="1" max="200" value="30" title="顧問先数">
                 </div>
 
                 <div class="slider-group">
-                    <label>月間のExcel修正・更新時間: <span id="val-hours">5</span> 時間</label>
-                    <input type="range" id="input-hours" min="1" max="40" value="5">
+                    <label for="input-hours">月間のExcel修正・更新時間: <span id="val-hours">5</span> 時間</label>
+                    <input type="range" id="input-hours" min="1" max="40" value="5" title="月間のExcel修正・更新時間">
                 </div>
 
                 <div class="risk-display">
@@ -186,7 +186,7 @@
                         <label>メールアドレス</label>
                         <input type="email" name="email" required placeholder="example@mail.com">
                     </div>
-                    <button type="submit" class="btn-primary">ツールを今すぐダウンロード</button>
+                    <button type="submit" id="submit-btn" class="btn-primary">ツールを今すぐダウンロード</button>
                     <p class="form-note">※入力したアドレスに詳細マニュアルが届きます。</p>
                 </form>
             </div>

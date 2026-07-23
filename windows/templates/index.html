@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>労務コンプライアンスチェッカー</title>
+    <!-- Google Fonts for modern typography -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            /* Add padding to prevent edge touching on small screens */
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 550px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .settings-panel {
+            background-color: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-panel h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+            color: var(--text-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>労務コンプライアンスチェッカー</h1>
+        <p class="subtitle">36協定・労働基準法に基づく残業時間チェックツール</p>
+
+        <form action="/check" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">CSVファイルを選択</label>
+                <input type="file" name="file" id="file" required accept=".csv">
+            </div>
+
+            <div class="settings-panel">
+                <h3>詳細設定（任意）</h3>
+                <div class="form-group">
+                    <label for="month_col">年月カラム名</label>
+                    <input type="text" name="month_col" id="month_col" value="年月" placeholder="例: 年月">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="overtime_col">残業時間カラム名</label>
+                    <input type="text" name="overtime_col" id="overtime_col" value="残業時間（h）" placeholder="例: 残業時間（h）">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="submit" style="flex: 2;">チェックを開始する</button>
+                <a href="/demo"
+                    style="flex: 1; text-align: center; background-color: #6b7280; color: white; padding: 0.875rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: block;">デモデータで試す</a>
+            </div>
+        </form>
+
+        <div style="margin-top: 30px; text-align: right;">
+            <a href="/pricing" style="color: #6b7280; text-decoration: none; font-size: 0.9rem;">
+                ℹ️ 機能比較・有料版について
+            </a>
+        </div>
+        <div
+            style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.8rem; color: #666; text-align: center;">
+            <details>
+                <summary>利用規約・免責事項</summary>
+                <div style="text-align: left; padding: 10px; background: #f9f9f9; border-radius: 4px; margin-top: 5px;">
+                    <p>1. 本ツールの計算結果は参考値であり、法的な正確性を保証するものではありません。<br>
+                        2. 本ツールの使用により生じた損害について、作者は一切責任を負いません。<br>
+                        3. 本ツールを作者の許可なく再配布、販売、改変することを禁じます。</p>
+                </div>
+            </details>
+            <div style="margin-top: 15px;">
+                <button onclick="quitApp()"
+                    style="background-color: #ef4444; color: white; width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;">アプリを終了する</button>
+            </div>
+            <p style="margin-top: 10px;">Copyright (c) 2025 uplink. All rights reserved. (v2025.12.16-3)</p>
+        </div>
+    </div>
+
+    <script>
+        function quitApp() {
+            if (confirm('アプリを終了しますか？')) {
+                fetch('/quit', { method: 'POST' })
+                    .then(response => {
+                        document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;"><h1>終了しました</h1><p>画面を閉じてください。</p></div>';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('終了に失敗しました。');
+                    });
+            }
+        }
+    </script>
+</body>
+
+</html>

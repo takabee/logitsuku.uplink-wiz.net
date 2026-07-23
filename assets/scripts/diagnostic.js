@@ -7,17 +7,21 @@
         const clientInput = document.getElementById('input-clients');
         const hourInput = document.getElementById('input-hours');
         const downloadForm = document.getElementById('download-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const clientsValue = document.getElementById('val-clients');
+        const hoursValue = document.getElementById('val-hours');
+        const riskAmount = document.getElementById('risk-amount');
 
-        if (!clientInput || !hourInput || !downloadForm) return;
+        if (!clientInput || !hourInput || !downloadForm || !clientsValue || !hoursValue || !riskAmount) return;
 
         function updateRisk() {
-            const clients = parseInt(clientInput.value);
-            const hours = parseInt(hourInput.value);
+            const clients = parseInt(clientInput.value, 10);
+            const hours = parseInt(hourInput.value, 10);
             const risk = clients * hours * 10000 * 12;
 
-            document.getElementById('val-clients').textContent = clients;
-            document.getElementById('val-hours').textContent = hours;
-            document.getElementById('risk-amount').textContent = "¥" + risk.toLocaleString();
+            clientsValue.textContent = String(clients);
+            hoursValue.textContent = String(hours);
+            riskAmount.textContent = "¥" + risk.toLocaleString();
 
             diagnosticData = { clients, hours, risk, skipped: false };
         }
@@ -28,7 +32,6 @@
         downloadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const submitBtn = document.getElementById('submit-btn');
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.textContent = '送信中...';
@@ -49,18 +52,19 @@
                     body: JSON.stringify(payload)
                 });
 
-                const result = await response.json();
+                const result = await response.json().catch(() => ({}));
 
                 if (response.ok && result.downloadUrl) {
                     alert('情報の送信に成功しました。ツールのダウンロードを開始します。');
                     // 指定されたURLへ飛ばす
                     window.location.href = result.downloadUrl;
                 } else {
-                    throw new Error('サーバーレスポンスが不正です');
+                    throw new Error(result.error || 'サーバーレスポンスが不正です');
                 }
             } catch (err) {
                 console.error(err);
                 alert('エラーが発生しました。入力を確認し、再度お試しください。');
+            } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'ツールを今すぐダウンロード';

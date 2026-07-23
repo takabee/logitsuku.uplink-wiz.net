@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules/
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+.cloudflarerc
+
+# Build artifacts
+dist/
+.pages/
+.package/
+.package-append/
+.zipfix/
+.pycache_tmp/
+
+# Python local environments / caches
+**/__pycache__/
+**/.venv/
+**/venv/
+*.pyc
+
+# Duplicate packaging (source of truth is windows/)
+windows.zip
+
+# OS files
+.DS_Store
+Thumbs.db
